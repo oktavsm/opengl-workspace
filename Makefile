@@ -1,4 +1,4 @@
-.PHONY: help new-task new-exp update-template
+.PHONY: help new-task new-exp update-template format
 
 help:
 	@echo "=========================================================="
@@ -8,7 +8,12 @@ help:
 	@echo "  make new-task NAME=<task_name>  - Create a new branch for a coursework task"
 	@echo "  make new-exp NAME=<exp_name>    - Create a new branch for an experiment"
 	@echo "  make update-template            - Pull the latest changes from the main template"
+	@echo "  make format                     - Auto-format C++ code using clang-format"
 	@echo "=========================================================="
+
+format:
+	@find src include -name "*.cpp" -o -name "*.hpp" -o -name "*.h" | xargs clang-format -i
+	@echo "✅ Code formatted successfully!"
 
 new-task:
 	@if [ -z "$(NAME)" ]; then echo "❌ Error: NAME is not set. Use 'make new-task NAME=my-task'"; exit 1; fi
