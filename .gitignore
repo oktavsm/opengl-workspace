@@ -1,0 +1,30 @@
+# CMake build
+build/
+
+# Compiled binaries
+*.o
+*.out
+*.exe
+komgraf
+
+# VS Code
+.vscode/*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.swp
+*~
+
+# Generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+compile_commands.json
+
+# AI Agents Documentation
+.agent/
