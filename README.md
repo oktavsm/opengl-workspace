@@ -60,6 +60,15 @@ __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia ./build/komgraf
 #### Using VS Code (Recommended)
 Simply open the project in VS Code, press `F5` or go to **Run and Debug** -> **KomGraf - NVIDIA**. The workspace will automatically build the project and launch the debugger with the correct NVIDIA environment variables.
 
+## 🧩 Template Functions Explained (`src/main.cpp`)
+
+The base template comes with a few essential functions to get you started:
+
+- **`init()`**: Called once at the start. Used to set up initial OpenGL states, like the background clear color (`glClearColor`) and enabling depth testing (`GL_DEPTH_TEST`).
+- **`display()`**: The main rendering loop. This is where you draw your objects. It is called automatically by GLUT whenever the window needs to be redrawn. Always starts with `glClear()` and ends with `glutSwapBuffers()`.
+- **`reshape(int width, int height)`**: Called whenever the window is resized. Used to adjust the `glViewport` and update the `GL_PROJECTION` matrix (e.g., `glOrtho` or `gluPerspective`) so your drawing scales correctly.
+- **`main()`**: The entry point of the program. It initializes FreeGLUT, creates the window, initializes GLEW to load OpenGL functions, and starts the infinite `glutMainLoop()`.
+
 ## 📂 Project Structure
 
 ```text
