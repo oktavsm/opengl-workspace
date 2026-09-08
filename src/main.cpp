@@ -3,16 +3,47 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
 
+#include "utils.hpp"
+
+namespace {
+
+constexpr GLfloat vertices[][2] = {
+    {10.0f, 90.0f},
+    {25.0f, 75.0f},
+    {35.0f, 90.0f},
+    {25.0f, 10.0f},
+    {45.0f, 25.0f},
+    {70.0f, 10.0f},
+    {55.0f, 25.0f},
+    {70.0f, 75.0f},
+    {55.0f, 90.0f},
+    {90.0f, 75.0f},
+    {90.0f, 90.0f},
+};
+
+void drawTriangleStrip(GLenum polygonMode, GLfloat red, GLfloat green, GLfloat blue)
+{
+    glPolygonMode(GL_FRONT_AND_BACK, polygonMode);
+    glColor3f(red, green, blue);
+
+    glBegin(GL_TRIANGLE_STRIP);
+    for (const auto& vertex : vertices)
+        glVertex2fv(vertex);
+    glEnd();
+}
+
+} // namespace
+
 void init()
 {
     glClearColor(
-        0.15f,
-        0.15f,
-        0.15f,
+        1.0f,
+        1.0f,
+        1.0f,
         1.0f
     );
 
-    glEnable(GL_DEPTH_TEST);
+    glLineWidth(2.0f);
 }
 
 void display()
@@ -22,10 +53,11 @@ void display()
         GL_DEPTH_BUFFER_BIT
     );
 
-    // ==========================================
-    // Rendering goes here
-    // ==========================================
+    drawTriangleStrip(GL_FILL, 0.55f, 0.78f, 0.80f);
+    drawTriangleStrip(GL_LINE, 0.12f, 0.38f, 0.40f);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
+    utils::checkGLError("display");
     glutSwapBuffers();
 }
 
@@ -40,6 +72,13 @@ void reshape(int width, int height)
         width,
         height
     );
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(0.0, 100.0, 0.0, 100.0, -1.0, 1.0);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 }
 
 int main(int argc, char** argv)
@@ -63,10 +102,9 @@ int main(int argc, char** argv)
     );
 
     glutCreateWindow(
-        "Komputer Grafis"
+        "Komputer Grafis - Triangulasi"
     );
 
-    // Initialize GLEW
     GLenum err = glewInit();
 
     if (err != GLEW_OK)
@@ -80,7 +118,6 @@ int main(int argc, char** argv)
         return 1;
     }
 
-    // Print OpenGL information
     printf(
         "OpenGL Vendor  : %s\n",
         glGetString(GL_VENDOR)
