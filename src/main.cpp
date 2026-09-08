@@ -8,11 +8,12 @@
 
 // Mode tampilan: 
 // 0 = Fill + Outline Triangulasi (Default sesuai gambar soal)
-// 1 = Wireframe Only (Hanya jaring-jaring segitiga)
-// 2 = Solid Fill Only (Hanya warna isi)
+// 1 = Cool Color Interpolation (Gradasi warna dingin / icy-blue smooth shading)
+// 2 = Wireframe Only (Hanya jaring-jaring segitiga)
+// 3 = Solid Fill Only (Hanya warna isi)
 static int displayMode = 0;
 
-// Fungsi menggambar seluruh bentuk menggunakan primitif GL_TRIANGLES murni
+// Fungsi menggambar seluruh bentuk menggunakan primitif GL_TRIANGLES (Flat / Single Color)
 void drawTriangles()
 {
     glBegin(GL_TRIANGLES);
@@ -82,9 +83,81 @@ void drawTriangles()
     glEnd();
 }
 
+// Fungsi menggambar triangulasi dengan Color Interpolation bertema dingin (Ice / Oceanic Blue)
+// Menggunakan warna per-vertex yang diinterpolasi otomatis oleh OpenGL (Gouraud Shading)
+void drawInterpolatedTriangles()
+{
+    glShadeModel(GL_SMOOTH);
+    glBegin(GL_TRIANGLES);
+
+        // ==========================================
+        // 1. Sisi Kiri (Left Wing & Left Shaft)
+        // ==========================================
+        
+        // Segitiga 1: Sayap kiri bawah
+        glColor3f(0.75f, 0.95f, 1.00f); glVertex2f(10.0f, 85.0f); // Icy Frost
+        glColor3f(0.35f, 0.75f, 0.95f); glVertex2f(10.0f, 65.0f); // Glacier Blue
+        glColor3f(0.20f, 0.85f, 0.85f); glVertex2f(30.0f, 65.0f); // Frost Mint
+
+        // Segitiga 2: Sayap kiri atas ke tiang
+        glColor3f(0.75f, 0.95f, 1.00f); glVertex2f(10.0f, 85.0f); // Icy Frost
+        glColor3f(0.20f, 0.85f, 0.85f); glVertex2f(30.0f, 65.0f); // Frost Mint
+        glColor3f(0.70f, 0.95f, 1.00f); glVertex2f(45.0f, 85.0f); // Arctic Cyan
+
+        // Segitiga 3: Tiang kiri luar
+        glColor3f(0.20f, 0.85f, 0.85f); glVertex2f(30.0f, 65.0f); // Frost Mint
+        glColor3f(0.08f, 0.12f, 0.50f); glVertex2f(30.0f, 15.0f); // Deep Midnight Indigo
+        glColor3f(0.70f, 0.95f, 1.00f); glVertex2f(45.0f, 85.0f); // Arctic Cyan
+
+        // Segitiga 4: Tiang kiri dalam
+        glColor3f(0.08f, 0.12f, 0.50f); glVertex2f(30.0f, 15.0f); // Deep Midnight Indigo
+        glColor3f(0.05f, 0.30f, 0.70f); glVertex2f(45.0f, 30.0f); // Deep Ocean Blue
+        glColor3f(0.70f, 0.95f, 1.00f); glVertex2f(45.0f, 85.0f); // Arctic Cyan
+
+        // ==========================================
+        // 2. Bagian Bawah (Bottom Base)
+        // ==========================================
+
+        // Segitiga 5: Dasar U bagian kiri
+        glColor3f(0.08f, 0.12f, 0.50f); glVertex2f(30.0f, 15.0f); // Deep Midnight Indigo
+        glColor3f(0.08f, 0.12f, 0.50f); glVertex2f(70.0f, 15.0f); // Deep Midnight Indigo
+        glColor3f(0.05f, 0.30f, 0.70f); glVertex2f(45.0f, 30.0f); // Deep Ocean Blue
+
+        // Segitiga 6: Dasar U bagian kanan
+        glColor3f(0.08f, 0.12f, 0.50f); glVertex2f(70.0f, 15.0f); // Deep Midnight Indigo
+        glColor3f(0.05f, 0.30f, 0.70f); glVertex2f(55.0f, 30.0f); // Deep Ocean Blue
+        glColor3f(0.05f, 0.30f, 0.70f); glVertex2f(45.0f, 30.0f); // Deep Ocean Blue
+
+        // ==========================================
+        // 3. Sisi Kanan (Right Shaft & Right Wing)
+        // ==========================================
+
+        // Segitiga 7: Tiang kanan dalam
+        glColor3f(0.08f, 0.12f, 0.50f); glVertex2f(70.0f, 15.0f); // Deep Midnight Indigo
+        glColor3f(0.05f, 0.30f, 0.70f); glVertex2f(55.0f, 30.0f); // Deep Ocean Blue
+        glColor3f(0.70f, 0.95f, 1.00f); glVertex2f(55.0f, 85.0f); // Arctic Cyan
+
+        // Segitiga 8: Tiang kanan luar
+        glColor3f(0.20f, 0.85f, 0.85f); glVertex2f(70.0f, 65.0f); // Frost Mint
+        glColor3f(0.08f, 0.12f, 0.50f); glVertex2f(70.0f, 15.0f); // Deep Midnight Indigo
+        glColor3f(0.70f, 0.95f, 1.00f); glVertex2f(55.0f, 85.0f); // Arctic Cyan
+
+        // Segitiga 9: Sayap kanan atas ke tiang
+        glColor3f(0.75f, 0.95f, 1.00f); glVertex2f(90.0f, 85.0f); // Icy Frost
+        glColor3f(0.20f, 0.85f, 0.85f); glVertex2f(70.0f, 65.0f); // Frost Mint
+        glColor3f(0.70f, 0.95f, 1.00f); glVertex2f(55.0f, 85.0f); // Arctic Cyan
+
+        // Segitiga 10: Sayap kanan bawah
+        glColor3f(0.75f, 0.95f, 1.00f); glVertex2f(90.0f, 85.0f); // Icy Frost
+        glColor3f(0.35f, 0.75f, 0.95f); glVertex2f(90.0f, 65.0f); // Glacier Blue
+        glColor3f(0.20f, 0.85f, 0.85f); glVertex2f(70.0f, 65.0f); // Frost Mint
+
+    glEnd();
+}
+
 void init()
 {
-    // Warna background putih (sesuai modul/soal)
+    // Warna background putih bersih (sesuai modul/soal)
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
     // Tebal garis untuk wireframe/outline
@@ -111,14 +184,25 @@ void display()
     }
     else if (displayMode == 1)
     {
-        // Mode 1: Wireframe saja
+        // Mode 1: Cool Color Interpolation (Gradasi Icy / Ocean Blue)
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        drawInterpolatedTriangles();
+
+        // Outline kontras halus agar pembagian segitiga tetap terlihat jelas
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glColor3f(0.12f, 0.38f, 0.40f);
+        glColor3f(0.05f, 0.15f, 0.35f); // Deep navy outline
         drawTriangles();
     }
     else if (displayMode == 2)
     {
-        // Mode 2: Solid Fill saja
+        // Mode 2: Wireframe saja
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glColor3f(0.12f, 0.38f, 0.40f);
+        drawTriangles();
+    }
+    else if (displayMode == 3)
+    {
+        // Mode 3: Solid Fill saja
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glColor3f(0.55f, 0.78f, 0.80f);
         drawTriangles();
@@ -157,8 +241,8 @@ void keyInput(unsigned char key, int x, int y)
     switch (key)
     {
     case ' ':
-        // Tekan spasi untuk toggle mode (Fill+Line -> Wireframe -> Fill)
-        displayMode = (displayMode + 1) % 3;
+        // Tekan spasi untuk toggle mode (0 -> 1 -> 2 -> 3 -> 0)
+        displayMode = (displayMode + 1) % 4;
         glutPostRedisplay();
         break;
     case 27: // Tombol Escape
@@ -171,12 +255,16 @@ void keyInput(unsigned char key, int x, int y)
 
 int main(int argc, char** argv)
 {
-    printf("==================================================\n");
+    printf("========================================================\n");
     printf("🎨 Aktivitas Individu 3 - Exercise 2.14 Triangulasi\n");
     printf("Kontrol Interaksi:\n");
-    printf("  [Spasi] : Ganti mode tampilan (Fill+Outline / Wireframe / Solid)\n");
-    printf("  [Esc]   : Keluar\n");
-    printf("==================================================\n");
+    printf("  [Spasi] : Toggle Mode:\n");
+    printf("            0. Teal Fill + Outline (Sesuai Soal Modul)\n");
+    printf("            1. Cool Color Interpolation (Tema Es/Oceanic)\n");
+    printf("            2. Wireframe Only\n");
+    printf("            3. Solid Fill Only\n");
+    printf("  [Esc]   : Keluar Program\n");
+    printf("========================================================\n");
 
     glutInit(&argc, argv);
 
