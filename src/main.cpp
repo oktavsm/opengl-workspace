@@ -40,6 +40,7 @@ void reshape(int width, int height)
         width,
         height
     );
+    glOrtho(0, 100.0, 0.0, 100.0, -1.0, 1.0);
 }
 
 int main(int argc, char** argv)
