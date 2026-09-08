@@ -24,6 +24,28 @@ make new-exp NAME=test-triangle
 
 These commands will automatically switch to `main`, pull the latest template updates, and create your new branch so you always start with a clean slate.
 
+## Running Code in This Workspace
+
+| Shortcut | Target | When to Use |
+| :--- | :--- | :--- |
+| **`F5`** | `src/main.cpp` (NVIDIA) | Running your primary coursework/task code structured with CMake. |
+| **`Ctrl + Shift + F5`** | Current Active File (AMD) | Running quick standalone `.cpp` files or textbook resources (`docs/ExperimenterSource`) without black screen issues. |
+
+### Important Rule When Switching Branches
+Always commit your changes before switching or creating new branches:
+```bash
+git add .
+git commit -m "feat: complete experiment X"
+```
+If you switch branches with uncommitted edits, Git will carry those edits over to the new branch.
+
+## How to Pull Template Updates into an Existing Branch
+
+If the `main` branch template receives updates (configurations, utilities, or docs), you can pull them into your current branch:
+```bash
+make update-template
+```
+
 ## How to Use This Template for a Completely New Repository
 
 If you want to use this template for a completely different GitHub repository, follow these steps:

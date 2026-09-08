@@ -2,18 +2,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "KomGraf - NVIDIA",
+            "name": "KomGraf (main.cpp) - NVIDIA",
             "type": "cppdbg",
             "request": "launch",
-
             "program": "${workspaceFolder}/build/komgraf",
-
             "args": [],
-
             "cwd": "${workspaceFolder}",
-
             "stopAtEntry": false,
-
             "environment": [
                 {
                     "name": "__NV_PRIME_RENDER_OFFLOAD",
@@ -24,12 +19,55 @@
                     "value": "nvidia"
                 }
             ],
-
             "externalConsole": false,
-
             "MIMode": "gdb",
-
             "preLaunchTask": "Build Komputer Grafis"
+        },
+        {
+            "name": "KomGraf (main.cpp) - Default",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/komgraf",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "preLaunchTask": "Build Komputer Grafis"
+        },
+        {
+            "name": "Debug Active File",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/active-${fileBasenameNoExtension}",
+            "args": [],
+            "cwd": "${fileDirname}",
+            "stopAtEntry": false,
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "preLaunchTask": "Build Active OpenGL File"
+        },
+        {
+            "name": "Debug Active File (NVIDIA)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/active-${fileBasenameNoExtension}",
+            "args": [],
+            "cwd": "${fileDirname}",
+            "stopAtEntry": false,
+            "environment": [
+                {
+                    "name": "__NV_PRIME_RENDER_OFFLOAD",
+                    "value": "1"
+                },
+                {
+                    "name": "__GLX_VENDOR_LIBRARY_NAME",
+                    "value": "nvidia"
+                }
+            ],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "preLaunchTask": "Build Active OpenGL File"
         }
     ]
 }
