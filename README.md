@@ -50,15 +50,42 @@ cmake --build build
 
 ### 2. Run the Project
 
-#### Using Terminal (NVIDIA PRIME Offload)
-If you are on a laptop with a dedicated NVIDIA GPU, use the following command to ensure the application runs on the dedicated GPU:
+#### Execution Modes & Shortcuts
 
-```bash
-__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia ./build/komgraf
-```
+| Action | Shortcut / Method | Target File | GPU Engine | Notes |
+| :--- | :--- | :--- | :--- | :--- |
+| **Main Project** | Press **`F5`** | `src/main.cpp` (via CMake) | **NVIDIA GTX 1050** | Built for semester project template (`GLUT_DOUBLE` + `glutSwapBuffers`). |
+| **Active / Experiment File** | Press **`Ctrl + Shift + F5`** | Current active `.cpp` in editor | **Default GPU (AMD Mesa)** | Best for textbook examples (`docs/ExperimenterSource`), fast test files, single-buffered legacy code (`GLUT_SINGLE`). |
+| **Active File on NVIDIA** | `Terminal` ➔ `Run Task...` ➔ `Run Active OpenGL File (NVIDIA)` | Current active `.cpp` in editor | **NVIDIA GTX 1050** | For standalone files requiring NVIDIA dGPU (must use `GLUT_DOUBLE`). |
 
-#### Using VS Code (Recommended)
-Simply open the project in VS Code, press `F5` or go to **Run and Debug** -> **KomGraf - NVIDIA**. The workspace will automatically build the project and launch the debugger with the correct NVIDIA environment variables.
+#### Using Terminal
+
+- **Run Main Project on NVIDIA (PRIME Offload):**
+  ```bash
+  __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia ./build/komgraf
+  ```
+- **Run Main Project on Default / Integrated GPU:**
+  ```bash
+  ./build/komgraf
+  ```
+
+#### Working with Course Resources (`docs/ExperimenterSource`)
+
+The folder `docs/ExperimenterSource` contains textbook sample code (from *Computer Graphics Through OpenGL: From Theory to Experiments* by Sumanta Guha).
+
+1. **Direct Run**: Open any `.cpp` file directly inside `docs/ExperimenterSource/...` and press **`Ctrl + Shift + F5`**. It compiles into `build/` and runs immediately.
+2. **Copying to `src/`**: You can copy any `.cpp` file into `src/`. If the program depends on local headers (like `getBMP.h` or `loadOBJ.h`), copy those `.h` files into `src/` or `include/` as well, open the `.cpp` file, and press **`Ctrl + Shift + F5`**.
+3. **Understanding the Black Screen Issue on Wayland**:
+   The textbook codes use legacy `GLUT_SINGLE` + `glFlush()`. Under Linux Wayland, single-buffered windows do not present frames through NVIDIA PRIME GLX offload (resulting in a blank black screen). Running via **`Ctrl + Shift + F5`** runs on the primary display GPU where `GLUT_SINGLE` renders properly. To run such code on NVIDIA, change `GLUT_SINGLE` to `GLUT_DOUBLE` in `glutInitDisplayMode()` and replace `glFlush()` with `glutSwapBuffers()`.
+
+## 🧩 Template Functions Explained (`src/main.cpp`)
+
+The base template comes with a few essential functions to get you started:
+
+- **`init()`**: Called once at the start. Used to set up initial OpenGL states, like the background clear color (`glClearColor`) and enabling depth testing (`GL_DEPTH_TEST`).
+- **`display()`**: The main rendering loop. This is where you draw your objects. It is called automatically by GLUT whenever the window needs to be redrawn. Always starts with `glClear()` and ends with `glutSwapBuffers()`.
+- **`reshape(int width, int height)`**: Called whenever the window is resized. Used to adjust the `glViewport` and update the `GL_PROJECTION` matrix (e.g., `glOrtho` or `gluPerspective`) so your drawing scales correctly.
+- **`main()`**: The entry point of the program. It initializes FreeGLUT, creates the window, initializes GLEW to load OpenGL functions, and starts the infinite `glutMainLoop()`.
 
 #### Running an Experiment File in VS Code
 `F5` always builds and debugs `src/main.cpp` through CMake. To run another standalone OpenGL file such as `src/circle.cpp`, open the file and press `Ctrl+Shift+F5`. This builds and runs the active `.cpp` file with the project OpenGL libraries.
