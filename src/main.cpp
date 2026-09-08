@@ -25,6 +25,18 @@ void display()
     // ==========================================
     // Rendering goes here
     // ==========================================
+    glPolygonMode(
+        GL_FRONT_AND_BACK,
+        GL_LINE
+    );
+    glBegin(GL_TRIANGLE_STRIP);
+        glVertex3f(10.0f, 90.0f, 0.0f);
+        glVertex3f(10.0f, 10.0f, 0.0f);
+        glVertex3f(35.0f, 75.0f, 0.0f);
+        glVertex3f(30.0f, 20.0f, 0.0f);
+        glVertex3f(90.0f, 90.0f, 0.0f);
+        glVertex3f(80.0f, 40.0f, 0.0f);
+    glEnd();
 
     glutSwapBuffers();
 }
@@ -40,6 +52,8 @@ void reshape(int width, int height)
         width,
         height
     );
+
+    glOrtho(0, 100.0, 0.0, 100.0, -1.0, 1.0);
 }
 
 int main(int argc, char** argv)
