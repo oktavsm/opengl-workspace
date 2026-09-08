@@ -19,6 +19,41 @@
             "problemMatcher": [
                 "$gcc"
             ]
+        },
+        {
+            "label": "Build Active OpenGL File",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-std=c++17",
+                "-g",
+                "${file}",
+                "-I${workspaceFolder}/include",
+                "-lglut",
+                "-lGLEW",
+                "-lGL",
+                "-lGLU",
+                "-o",
+                "${workspaceFolder}/build/active-${fileBasenameNoExtension}"
+            ],
+            "dependsOn": "CMake Configure",
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "Run Active OpenGL File",
+            "type": "shell",
+            "command": "${workspaceFolder}/build/active-${fileBasenameNoExtension}",
+            "dependsOn": "Build Active OpenGL File",
+            "dependsOrder": "sequence",
+            "options": {
+                "env": {
+                    "__NV_PRIME_RENDER_OFFLOAD": "1",
+                    "__GLX_VENDOR_LIBRARY_NAME": "nvidia"
+                }
+            },
+            "problemMatcher": []
         }
     ]
 }
