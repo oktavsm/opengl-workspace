@@ -29,14 +29,19 @@
                 "-g",
                 "${file}",
                 "-I${workspaceFolder}/include",
+                "-I${workspaceFolder}/src",
+                "-I${fileDirname}",
                 "-lglut",
                 "-lGLEW",
                 "-lGL",
                 "-lGLU",
+                "-lglfw",
                 "-o",
                 "${workspaceFolder}/build/active-${fileBasenameNoExtension}"
             ],
-            "dependsOn": "CMake Configure",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
             "problemMatcher": [
                 "$gcc"
             ]
@@ -48,6 +53,18 @@
             "dependsOn": "Build Active OpenGL File",
             "dependsOrder": "sequence",
             "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Run Active OpenGL File (NVIDIA)",
+            "type": "shell",
+            "command": "${workspaceFolder}/build/active-${fileBasenameNoExtension}",
+            "dependsOn": "Build Active OpenGL File",
+            "dependsOrder": "sequence",
+            "options": {
+                "cwd": "${fileDirname}",
                 "env": {
                     "__NV_PRIME_RENDER_OFFLOAD": "1",
                     "__GLX_VENDOR_LIBRARY_NAME": "nvidia"
