@@ -61,7 +61,7 @@ __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia ./build/komgraf
 Simply open the project in VS Code, press `F5` or go to **Run and Debug** -> **KomGraf - NVIDIA**. The workspace will automatically build the project and launch the debugger with the correct NVIDIA environment variables.
 
 #### Running an Experiment File in VS Code
-`F5` always builds and debugs `src/main.cpp` through CMake. To run another standalone OpenGL file such as `src/circle.cpp`, open the file and press `Ctrl+Alt+F5`. This builds and runs the active `.cpp` file with the project OpenGL libraries.
+`F5` always builds and debugs `src/main.cpp` through CMake. To run another standalone OpenGL file such as `src/circle.cpp`, open the file and press `Ctrl+Shift+F5`. This builds and runs the active `.cpp` file with the project OpenGL libraries.
 
 The active file must provide its own `int main()`. On a new VS Code installation, run **Tasks: Run Task** -> **Run Active OpenGL File** or bind that task to your preferred shortcut.
 ## 📂 Project Structure
